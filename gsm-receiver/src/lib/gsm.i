@@ -22,6 +22,8 @@
 
 %feature("autodoc", "1");		// generate python docstrings
 
+%include "stl.i"
+
 %include "exception.i"
 %import "gnuradio.i"			// the common stuff
 
