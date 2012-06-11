@@ -23,4 +23,4 @@ fi
 
 #./gsm_receive.py  -d "$DECIM" -I "$FILE" -c "$CONFIGURATION" -k "$KEY" | ../../../gsmdecode/src/gsmdecode -i
 
-./gsm_receive.py  -d "$DECIM" -I "$FILE" -c "$CONFIGURATION" -k "$KEY"
+gsm_receive.py  -d "$DECIM" -I "$FILE" -c "$CONFIGURATION" -k "$KEY"
