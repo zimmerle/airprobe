@@ -22,24 +22,17 @@ if [ $4"x" = x ]; then
 fi
 
 
-USRP_PROG=usrp_rx_cfile.py
-while :; do
-	which "$USRP_PROG"
-	if [ $? -eq 0 ]; then
-		break
-	fi
-	USRP_PROG=/usr/share/gnuradio/usrp/usrp_rx_cfile.py
-	which "$USRP_PROG"
-	if [ $? -eq 0 ]; then
-		break
-	fi
+UHD_PROG=uhd_rx_cfile
 
-	echo "ERROR: usrp_rx_cfile.py not found. Make sure it's in your PATH!"
+which "$UHD_PROG" 1> /dev/null 2> /dev/null
+if [ $? -ne 0 ]; then
+	echo "ERROR: uhd_rx_cfile not found. Make sure it's in your PATH!"
 	exit 1
-done
+fi
 
 FILE="capture_${FREQ}_${DECIM}.cfile"
-samples=`expr 64000000 / $DECIM '*' $DURATION`
+sample_rate=`expr 64000000 / $DECIM`
+samples=`expr $sample_rate '*' $DURATION`
 echo "Capturing for $DURATION seconds to $FILE ($samples samples)"
-$USRP_PROG -g $GAIN -d "$DECIM" -f "$FREQ" -N $samples $FILE
+$UHD_PROG -g $GAIN -f "$FREQ" --samp-rate=$sample_rate -N $samples $FILE
 
